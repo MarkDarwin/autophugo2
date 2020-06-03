@@ -3,9 +3,10 @@
     {{- /* Things in site config */}}
     {{- $column_count := default 2 ($.Param "column_count") }}
     {{- $thumb_width := default 480 ($.Param "thumb_width") }}
+    {{- $thumb_height := default 350 ($.Param "thumb_height") }}
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
 
-    {{- $thumb_size := printf "%dx q%d" $thumb_width $thumb_quality }}
+    {{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
 
     {{- /* Build the list of sections and thumbnails */}}
     {{- $.Scratch.Set "sections" (slice) }}
@@ -84,22 +85,19 @@
     {{- end }}
 
     <div id="main">
-        <div class="flexrow">
-
-        {{- /* Output the images in columns */}}
-        {{- range $column_ind := seq $column_count }}
-            {{- $st_name := printf "col-%d" $column_ind }}
-            {{- $column := $.Scratch.Get $st_name }}
-
-            <div class="flexcol">
-            {{- range $column }}
-                <article class="thumb">
-                    <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
-                    <h2>{{ .title }}</h2>
-                </article>
-            {{- end }}
-            </div>
-        {{- end }}
-        </div>
+        <ul id="og-grid" class="og-grid">
+            {{- range $column_ind := seq $column_count }}
+                {{- $st_name := printf "col-%d" $column_ind }}
+                {{- $column := $.Scratch.Get $st_name }}
+                {{- range $column }}
+                    <li>
+                        <article class="thumb">
+                            <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                            <h2>{{ .title }}</h2>
+                        </article>
+                    </li>
+                {{- end }}            
+        {{ end }}
+        </ul>
     </div>
 {{ end }}
