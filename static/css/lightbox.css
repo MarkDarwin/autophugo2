@@ -172,12 +172,13 @@
     filter: blur(50px);
   }
   [id^="lightbox-"] a.close {
-    width: 2em;
-    height: 2em;
+    width: 10%;
+    height: 10%;
+    border-radius: 0.2rem;
     position: absolute;
     right: 0;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -185,9 +186,8 @@
     opacity: 0;
     transform-origin: right top;
     text-decoration: none;
-    color: #fff;
+    color: #cccccc;
+    font-size: 1em;
   }
-  [id^="lightbox-"] a.close::after {
-    content: "X";
-  }
+  
   
