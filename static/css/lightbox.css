@@ -131,8 +131,19 @@
     opacity: 0;
   }
 
+
+  [id^="lightbox-"] .title  ul {
+    list-style-type: none;
+    margin: 0;
+    overflow: wrap; 
+    
+  }
+  
+
   [id^="lightbox-"] .title li {
     list-style-type: none;
+    float: left;
+    padding: 0 1rem;
   }
 
   [id^="lightbox-"] .title li i {
