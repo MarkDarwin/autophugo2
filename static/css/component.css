@@ -179,25 +179,6 @@
 	border-radius: 1rem;
 }
 
-ul.exif {
-  list-style-type: square;
-  -webkit-column-width: 180px;
-  -moz-column-width: 180px;
-  column-width: 180px;
-  -webkit-column-count: 2; /* max count */
-  -moz-column-count: 2;
-  column-count: 2;
-	text-align: left;
-	padding: 10px;
-	margin: 0;
-	
-}
-
-ul.exif > li {
-	height: auto;
-	display: list-item;
-	margin: 0;
-}
 
 @-webkit-keyframes loader {
 	0% { background: #ddd; }
