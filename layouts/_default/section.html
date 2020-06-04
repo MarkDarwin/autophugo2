@@ -112,8 +112,10 @@
                                     {{ if not $.Site.Params.no_exif }}
                                         {{ if in (slice "jpg" "jpeg" "tiff" "tif") $full.MediaType.SubType }}
                                         {{- with $full.Exif -}}
-                                            {{- with .Tags -}}
+                                            
                                             <ul>
+                                                {{ with .Date }}<li><i class="fas fa-calendar-alt"></i> {{ .Format "January 02, 2006" }}</li>{{ end }}
+                                                {{- with .Tags -}}
                                                 <li><i class="fas fa-camera"></i> {{- if isset . "Model" }}
                                                         {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
                                                             {{ .Make }} 
@@ -138,8 +140,9 @@
                                                 {{- with .FNumber }}<li><i class="fas fa-adjust"></i> f/{{ . }}</li>{{ end }}
                                                 {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>  ISO {{ . }}</li>{{ end }}
                                                 {{- with .DateTaken }}<li>Taken at {{ .Format "January 2, 2006" }}</li>{{ end }}
+                                                {{- end -}}
                                             </ul>
-                                            {{- end -}}
+                                            
                                         {{- end }}
                                     {{- end }}{{ end }}
                                 </div>
