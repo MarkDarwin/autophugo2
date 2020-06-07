@@ -60,7 +60,7 @@
 
 
     <div id="main">
-    <div id="ltb-container"></div>
+    <div id="ltb-container">
         <div class="container" id="ltb-gallery">
             {{- range $column_ind := seq $column_count }}
                 {{- $st_name := printf "col-%d" $column_ind }}
@@ -107,7 +107,8 @@
                     {{- end }}
                     {{- $full := .Resize $full_size }}
                         <div class="lightbox" id="lightbox-{{ $index }}">
-                            <div class="content"><img src="{{ $full.RelPermalink }}"/>
+                            <div class="content">
+                                <img src="{{ $full.RelPermalink }}"/>
                                 <div class="title">
                                     {{ if not $.Site.Params.no_exif }}
                                         {{ if in (slice "jpg" "jpeg" "tiff" "tif") $full.MediaType.SubType }}
