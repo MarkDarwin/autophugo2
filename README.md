@@ -1,4 +1,4 @@
-# AutoPhugo
+# AutoPhugo 2
 
 AutoPhugo 2 [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that builds on [AutoPhugo](https://github.com/kc0bfv/autophugo/).
 
