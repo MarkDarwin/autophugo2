@@ -225,6 +225,7 @@ table.alt tfoot { border-top: 0; }
 .panel > .inner.split > :first-child { margin-left: 0; }
 .panel > .closer { -moz-transition: opacity 0.2s ease-in-out; -webkit-transition: opacity 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-in-out; transition: opacity 0.2s ease-in-out; background-image: url("images/close.svg"); background-position: center; background-repeat: no-repeat; background-size: 3em; cursor: pointer; height: 5em; opacity: 0.25; position: absolute; right: 0; top: 0; width: 5em; z-index: 2; }
 .panel > .closer:hover { opacity: 1.0; }
+.panel img {max-width: 100%; max-height: 100%;}
 @media screen and (max-width: 1280px) { .panel { padding: 3em 3em 1em 3em ; }
   .panel > .inner.split > div { margin-left: 3em; }
   .panel > .closer { background-size: 2.5em; background-position: 75% 25%; } }
@@ -301,7 +302,7 @@ body.loading #header { -moz-transform: translateY(4em); -webkit-transform: trans
 #main .thumb:after { background-image: -moz-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: -webkit-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: -ms-linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); background-image: linear-gradient(to top, rgba(10,17,25,0.35) 5%, rgba(10,17,25,0) 35%); -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; background-size: cover; content: ''; display: block; height: 100%; left: 0; position: absolute; top: 0; width: 100%; }
 #main .thumb > .image { -webkit-tap-highlight-color: rgba(255, 255, 255, 0); background-position: center; background-repeat: no-repeat; background-size: cover; border: 0; width: 100%; }
 #main .thumb > .link { -webkit-tap-highlight-color: rgba(255, 255, 255, 0); background-position: center; background-repeat: no-repeat; background-size: cover; border: 0; width: 100%; }
-#main .thumb > h2 { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; bottom: 1.875em; font-size: 0.8em; left: 2.1875em; margin: 0; position: absolute; z-index: 1; }
+#main .thumb > h2 { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; bottom: 0.5em; font-size: 0.8em; left: 0em; margin: 0; position: absolute; z-index: 1; background-color: #0007; width: 100%; padding: 10px 0px 10px 0px;  }
 #main .thumb > p { display: none; }
 #main:after { -moz-pointer-events: none; -webkit-pointer-events: none; -ms-pointer-events: none; pointer-events: none; -moz-transition: opacity 0.5s ease, visibility 0.5s; -webkit-transition: opacity 0.5s ease, visibility 0.5s; -ms-transition: opacity 0.5s ease, visibility 0.5s; transition: opacity 0.5s ease, visibility 0.5s; background: rgba(36, 38, 41, 0.25); content: ''; display: block; height: 100%; left: 0; opacity: 1; position: absolute; top: 0; visibility: hidden; width: 100%; z-index: 1; }
 body.ie #main:after { background: rgba(36, 38, 41, 0.55); }

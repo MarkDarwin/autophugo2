@@ -1,6 +1,11 @@
 {{ "<!-- Footer -->" | safeHTML }}
-    <footer id="footer" class="panel">
+    <footer id="about" class="panel">
         <div class="inner split">
+            <div>
+                <section>
+                    <img src="/img/me.jpg" />
+                </section>
+            </div>
             <div>
                 <section>
                     <h2>{{ with .Site.Params.footer.paragraph.headline }}{{ . | markdownify }}{{ end }}</h2>
@@ -18,7 +23,10 @@
                     &copy; {{ with .Site.Params.footer.copyright.name }}{{ . | markdownify }}{{ end }}. Theme: <a href="https://github.com/nsoui/autophugo2">AutoPhugo 2</a>.
                 </p>
             </div>
-
+        </div>
+    </footer>
+    <footer id="contact" class="panel">
+        <div class="inner split">
             {{ if not .Site.Params.footer.contact.hide }}
                 <div>
                     <section>
