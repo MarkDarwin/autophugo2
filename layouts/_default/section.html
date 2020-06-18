@@ -19,6 +19,13 @@
 
     <div id="main">
     <div id="ltb-container">
+        <div id="album-header">
+            <h1>{{- .Title}}</h1>
+            {{ with .Params.Get "quote"}}
+                <blockquote author={{ .author }}>{{ .text }}</blockquote>
+            {{ end }}            
+        </div>
+
         <div class="container" id="ltb-gallery">
             {{- range $index, $image := $images }}
                 {{- $thumb := $image.Resize $thumb_size }}
