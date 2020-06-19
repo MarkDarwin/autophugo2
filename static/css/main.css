@@ -336,7 +336,17 @@ body.loading #main .thumb { -moz-pointer-events: none; -webkit-pointer-events: n
 #footer .copyright a { color: inherit; }
 
 
+#welcome {
+  text-align: center;
+  padding: 2em;  
+  max-width: 700px;
+  min-width: 320px;
+  margin: 0 auto 0;
+}
 
+#welcome img {
+  width: 100%;
+}
 
 #album-header {
   /* background: #fff; */

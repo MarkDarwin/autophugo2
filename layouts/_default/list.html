@@ -1,65 +1,68 @@
 {{ define "main" }}
 
-    {{- /* Things in site config */}}
-    {{- $thumb_width := default 480 ($.Param "thumb_width") }}
-    {{- $thumb_height := default 350 ($.Param "thumb_height") }}
-    {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+{{- /* Things in site config */}}
+{{- $thumb_width := default 480 ($.Param "thumb_width") }}
+{{- $thumb_height := default 350 ($.Param "thumb_height") }}
+{{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
 
-    {{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
+{{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
 
-    {{- /* Build the list of albums and thumbnails */}}
-    {{- $.Scratch.Set "albums" (slice) }}
-    {{- range (where .Site.Pages "Kind" "section").ByDate }}
-        {{- if eq .Type "album" }}
-            {{- $title := .Title }}
-            {{- $link := .Permalink }}
+{{- /* Build the list of albums and thumbnails */}}
+{{- $.Scratch.Set "albums" (slice) }}
+{{- range (where .Site.Pages "Kind" "section").ByDate }}
+{{- if eq .Type "album" }}
+{{- $title := .Title }}
+{{- $link := .Permalink }}
 
-            {{- /* The path we need under the assets directory */}}
-            {{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
+{{- /* The path we need under the assets directory */}}
+{{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
 
-            {{- $.Scratch.Delete "image" }}
+{{- $.Scratch.Delete "image" }}
 
-            {{- /* If no albumthumb is set, get the first image*/}}
-            {{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
-                {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
-                {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
-                {{- $.Scratch.Set "image" (index $imageresources 0) }}
-            {{- end }}
+{{- /* If no albumthumb is set, get the first image*/}}
+{{- if or (not (isset .Params "albumthumb")) (eq .Params.albumthumb "") }}
+{{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
+{{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+{{- $.Scratch.Set "image" (index $imageresources 0) }}
+{{- end }}
 
-            {{- /* Otherwise get the albumthumb*/}}
-            {{- with .Params.albumthumb }}
-                {{- $image := resources.Get $imgpath }}
-                {{- $.Scratch.Set "image" $image }}
-            {{- end }}
+{{- /* Otherwise get the albumthumb*/}}
+{{- with .Params.albumthumb }}
+{{- $image := resources.Get $imgpath }}
+{{- $.Scratch.Set "image" $image }}
+{{- end }}
 
-            {{- $image := $.Scratch.Get "image" }}
-            {{- if not $image }}
-                {{- errorf (printf "No thumbnail image found for: %s" $title) }}
-            {{- else }}
-                {{- $thumb := $image.Resize $thumb_size }}
-                {{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
+{{- $image := $.Scratch.Get "image" }}
+{{- if not $image }}
+{{- errorf (printf "No thumbnail image found for: %s" $title) }}
+{{- else }}
+{{- $thumb := $image.Resize $thumb_size }}
+{{- $new_sect := dict "title" $title "link" $link "thumb" $thumb }}
 
-                {{- $albums := $.Scratch.Get "albums" }}
-                {{- $albums := $albums | append $new_sect }}
-                {{- $.Scratch.Set "albums" $albums }}
-            {{- end }}
+{{- $albums := $.Scratch.Get "albums" }}
+{{- $albums := $albums | append $new_sect }}
+{{- $.Scratch.Set "albums" $albums }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- $albums := $.Scratch.Get "albums" }}
+
+<div id="welcome">
+    <img src="/img/logo.png" />
+</div>
+<div id="main">
+    <ul id="og-grid" class="og-grid">
+        {{- range $elem_index, $elem_val := $albums }}
+        {{- with $elem_val }}
+        <li>
+            <article class="thumb">
+                <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
+                <h2>{{ .title }}</h2>
+            </article>
+        </li>
         {{- end }}
-    {{- end }}
-
-    {{- $albums := $.Scratch.Get "albums" }}
-
-    <div id="main">
-        <ul id="og-grid" class="og-grid">
-            {{- range $elem_index, $elem_val := $albums }}
-                {{- with $elem_val }}
-                    <li>
-                        <article class="thumb">
-                            <a href="{{ .link }}" class="link" tabindex="0"><img src="{{ .thumb.RelPermalink }}" alt="{{ .title }}" /></a>
-                            <h2>{{ .title }}</h2>
-                        </article>
-                    </li>
-                {{- end }}         
-            {{ end }}
-        </ul>
-    </div>
+        {{ end }}
+    </ul>
+</div>
 {{ end }}
