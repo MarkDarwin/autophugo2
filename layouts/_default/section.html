@@ -72,14 +72,13 @@
                                 {{ if not $.Site.Params.no_exif }}
                                     {{ if in (slice "jpg" "jpeg" "tiff" "tif") $full.MediaType.SubType }}
                                     {{- with $full.Exif -}}
-                                        
                                         <ul>
-                                            {{/*  {{ printf "%#v" . }}   */}}
-                                            {{- with .Date }}<li><i class="fas fa-calendar-alt"></i> {{ .Format "January 02, 2006" }}</li>{{ end }}
+                                            {{/*  {{  printf "%#v" . }}   */}}
                                             {{- if isset . "Nikon3" -}}
                                                 {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
                                             {{ end }}
                                             {{- with .Tags -}}
+                                            {{ $tags := . }}
                                             <li><i class="fas fa-camera"></i> {{- if isset . "Model" }}
                                                     {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
                                                         {{ .Make }} 
@@ -92,21 +91,24 @@
                                                     {{ end }}
                                                 {{ end }}
                                             </li>
-                                            <li><i class="fas fa-bullseye"></i> {{- if isset . "LensModel" -}}
-                                                {{- if not (hasPrefix (lower .LensModel) (lower .Make)) }}
-                                                        {{ .LensModel }}
-                                                    {{- else }}
-                                                        {{ substr .LensModel (len .Make)}}
-                                                    {{ end }} @ {{ .FocalLength }}mm
+                                            {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
+                                                
+                                                {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
+                                                    {{ substr $tags.LensModel (len $tags.Make)}}
+                                                {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
+                                                    {{ substr $tags.LensModel (len $tags.Model)}}
                                                 {{- else }}
-                                                    {{ .FocalLength }}mm
-                                                {{- end }}
-                                            </li>
-                                            {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>  {{ . }}s</li>{{ end }}
-                                            {{- with .FNumber }}<li><i class="fas fa-adjust"></i> f/{{ . }}</li>{{ end }}
-                                            {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>  ISO {{ . }}</li>{{ end }}
-                                            {{- with .DateTaken }}<li>Taken at {{ .Format "January 2, 2006" }}</li>{{ end }}
-                                            {{- with .Copyright }}<li><i class="far fa-copyright"></i> {{ . }}</li>{{ end }}
+                                                    {{ $tags.LensModel }}
+                                                {{ end }}
+                                                </li>
+                                            {{- end }}
+                                            
+                                            {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
+                                            {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
+                                            {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
+                                            {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
+                                            {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 02, 2006" }}</li>{{ end }}
+                                            {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
                                             {{- end -}}
                                         </ul>
                                         
