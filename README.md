@@ -1,8 +1,8 @@
-# AutoPhugo
+# AutoPhugo 2
 
-AutoPhugo [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that's a little more automatic than [Phugo](https://github.com/kc0bfv/phugo/).  It is a port of HTML5 UP [Multiverse template](https://html5up.net/multiverse).  Phugo was originally created by Aerohub, Pavel Kanyshev.
+AutoPhugo 2 [ˌɔtoʊˈfjuːgəʊ] is a gallery/photoblog theme for Hugo that builds on [AutoPhugo](https://github.com/kc0bfv/autophugo/).
 
-Preview at <https://kc0bfv.github.io/autophugo>
+Preview at my photography site <https://www.souissi.eu>
 
 ## Features
 
@@ -14,6 +14,8 @@ Preview at <https://kc0bfv.github.io/autophugo>
 - Basic Breadcrumbs
 - Contact Form
 - Automated Image Scaling
+- Will show EXIF information as a layer on top of the pictures when they are hovered
+
 
 ## Installation
 
