@@ -1,182 +1,166 @@
-* {
-    box-sizing: border-box;
-  }
-
-#ltb-container {
-    margin: 0;
-    position: relative;
-    background-color: #242629;
-  }
+.row {
+  padding: 20px 0;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
   
-  #ltb-gallery {
-    list-style: none;
-    /* padding: 20px 0; */
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-  }
-  
-  #ltb-gallery > div > a {
-    opacity: 0;
-    position: absolute;
-    color: #000;
-    background-color: #000;
-    font: bold 4em "Helvetica";
-    text-shadow: 0 -1px 5px #fff, -1px 0px 5px #fff, 0 1px 5px #fff, 1px 0px 5px #fff;
-    mix-blend-mode: difference;
-    width: 100%;
-    height: 100%;
-    transition: all ease 1s;
-  }
-  #ltb-gallery > div > img {
-    width: 100%;
-    min-height: 100%;
-    transition: all ease 1s;
-  }
-  #ltb-gallery > div:hover img {
-    filter: blur(4px);
-  }
-  #ltb-gallery > div:hover a {
-    opacity: 1;
-  }
-  #ltb-gallery > div {
-    overflow: hidden;
-    position: relative;
-    /* box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19); */
-    display: inline-block;
-    margin: 10px 5px 0 5px;
-    vertical-align: top;
-  }
-  #ltb-gallery div,
-  #ltb-gallery a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-  }
-  
-  [id^="lightbox-"] {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - 4em);
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    opacity: 0;
-    transition: opacity 450ms ease-in-out;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
+}
 
-  @media (max-width: 736px) {
-    [id^="lightbox-"] {
-      top: 4em;
-    }
-  }
+.row > .column {
+  padding: 8px 8px;
+}
 
-  [id^="lightbox-"]:target {
-    opacity: 1;
-    pointer-events: inherit;
+.row > .column > img{
+  max-height: 150px;
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Create four equal columns that floats next to eachother */
+.column {
+  float: left;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #cacaca;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hide the slides by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  /* position: absolute; */
+  /* top: 10px; */
+  width: auto;
+  padding: 0 16px 0 16px; 
+  color: #cacaca;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 3px 0 0 3px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  /* right: 0; */
+  border-radius: 0 3px 3px 0;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(68, 68, 68, 1);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Caption text */
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 5px 0px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.caption-container p, .caption-container ,prev, .caption-container .next {
+  margin: 0;
+}
+
+img.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.table {
+    display: flex;
+    border-collapse: collapse;
+    width: 100%;
   }
-  [id^="lightbox-"]:target img {
-    filter: blur(0);
+  .table > .item {
+    flex: 1;
   }
-  [id^="lightbox-"] .content {
-    max-width: 90%;
-    position: relative;
-    color: #fff;
-  }
-  [id^="lightbox-"] .content:hover > a.close {
-    opacity: 1;
-    transform: scale(1, 1);
-  }
-  [id^="lightbox-"] .content:hover > .title {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  [id^="lightbox-"] .content:hover > .title::after {
-    opacity: 1;
-  }
-  [id^="lightbox-"] .content > * {
-    transition: all 450ms ease-in-out;
-  }
-  [id^="lightbox-"] .title {
+  .table > .item > img {
     display: block;
-    margin: 0;
-    padding: .5em;
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    transform: translateY(50%);
-    font-size: 1.5 rem;
-    opacity: 0;
+    height: auto;
   }
 
-
-  [id^="lightbox-"] .title  ul {
-    list-style-type: none;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-
-  [id^="lightbox-"] .title li {
-    list-style-type: none;
-    float: left;
-    margin: 0 1rem;
-    font-size: 1rem;
-  }
-
-  [id^="lightbox-"] .title li i {
-    margin-right: 0.75rem;
-  }
-
-
-  [id^="lightbox-"] .title::after {
-    content: ' ';
-    background-color: rgba(0, 0, 0, 0.8);
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    transition: all 350ms ease-in-out 250ms;
-    opacity: 0;
-    transform-origin: bottom;
-    mix-blend-mode: soft-light;
-  }
-  [id^="lightbox-"] img {
-    max-height: calc(100vh - 5em);
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    filter: blur(50px);
-  }
-  [id^="lightbox-"] a.close {
-    width: 10%;
-    height: 10%;
-    border-radius: 0.2rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: scale(0, 0);
-    opacity: 0;
-    transform-origin: right top;
-    text-decoration: none;
-    text-decoration-color: rgba(0, 0, 0, 0.7);
-    color: #cccccc;
-    font-size: 1em;
-  }
-  
-  
+.fill {object-fit: fill;}
+.contain {object-fit: contain;}
+.cover {object-fit: cover;}
+.scale-down {object-fit: scale-down;}
+.none {object-fit: none;}

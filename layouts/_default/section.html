@@ -15,148 +15,94 @@
     {{- /* Get and reorder the list of images */}}
     {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
+    {{- $scratch := newScratch }}
+    {{- $scratch.Set "Title" .Title }}
     {{- $images := $imageresources }}
+    {{- $nbImages := len $images }}
+
+
+    {{- /* Reize images and capture their urls */}}
+    {{- range $index, $image := $images }}
+        {{- with $image -}}
+            {{- $img_dat := newScratch }}
+            {{- $img_dat.Set "alt" "" }}
+            {{- $img_dat.Set "phototitle" "" }}
+            {{- $img_dat.Set "description" "" }}
+            {{- $img_path := .Name }}
+            {{- with $.Params.resources }}
+                {{- range first 1 (where . "src" $img_path) }}
+                    {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
+                    {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                    {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+                {{- end }}
+            {{- end }}
+            {{- $thumb := .Resize $thumb_size }}
+            {{- $full := .Resize $full_size }}
+            {{- $img_dat.Set "full" $full.RelPermalink }}
+            {{- $img_dat.Set "thumb" $thumb.RelPermalink }}
+            {{- $scratch.Add "images" (slice $img_dat) }}
+        {{ end }}
+    {{ end }}
+
 
     <div id="main">
-    <div id="ltb-container">
-        <div id="album-header">
-            <h1>{{- .Title}}</h1>
-            {{ with .Params.Get "quote"}}
-                <blockquote author={{ .author }}>{{ .text }}</blockquote>
-            {{ end }}            
-        </div>
-
-        <div class="container" id="ltb-gallery">
-            {{- range $index, $image := $images }}
-                {{- $thumb := $image.Resize $thumb_size }}
-                {{- with $image -}}
-                    {{- $img_dat := newScratch }}
-                    {{- $img_dat.Set "alt" "" }}
-                    {{- $img_dat.Set "phototitle" "" }}
-                    {{- $img_dat.Set "description" "" }}
-                    {{- $img_path := .Name }}
-                    {{- with $.Params.resources }}
-                        {{- range first 1 (where . "src" $img_path) }}
-                            {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
-                            {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
-                            {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
+        <div id="ltb-container">
+            <div id="album-header">
+                <h1>{{- .Title}}</h1>
+                {{ with .Params.Get "quote"}}
+                    <blockquote author={{ .author }}>{{ .text }}</blockquote>
+                {{ end }}            
+            </div>
+            <div class="container" id="ltb-gallery">
+                <!-- Images used to open the lightbox -->
+                <div class="row">
+                    {{- range $index, $image := $scratch.Get "images" }}
+                        {{- with $image -}}
+                            <div class="column">
+                                <img src='{{ .Get "thumb" }}' onclick="openModal();currentSlide({{ add  $index 1 }})" class="hover-shadow">
+                            </div>
                         {{- end }}
                     {{- end }}
-                    {{- $thumb := .Resize $thumb_size }}
-                    <div><img src="{{ $thumb.RelPermalink }}"/><a href="#lightbox-{{ $index }}">{{ $img_dat.Get "phototitle" | markdownify }}</a></div>
-                {{- end }}
-            {{- end }}
+                </div>
+                <!-- The Modal/Lightbox -->
+                <div id="myModal" class="modal">
+                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                    <div class="table">
+                        {{- range $index, $image := $scratch.Get "images" }}
+                            {{- with $image -}}
+                                <div class="column item">
+                                    <img class="demo contain" src='{{ .Get "thumb" }}' style="flex-basis: 150px; flex-shrink: 1;" onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                </div>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                    <div class="modal-content">
+
+                        <!-- Caption text -->
+                        <div class="caption-container">
+                            <!-- Next/previous controls -->
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <p id="caption"></p>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        </div>   
+
+
+
+                        {{- range $index, $image := $scratch.Get "images" }}
+                            {{- with $image -}}
+                                <div class="mySlides">
+                                    <img src='{{ .Get "full" }}' class="fill" />
+                                </div>
+                            {{- end }}
+                        {{- end }}
+                    
+                         
+                    </div>
+
+                    
+                </div>
+            </div>
             
         </div>
-        
-        {{- range $index, $image := $images }}
-            {{- with $image -}}
-                {{- $img_dat := newScratch }}
-                {{- $img_dat.Set "alt" "" }}
-                {{- $img_dat.Set "phototitle" "" }}
-                {{- $img_dat.Set "description" "" }}
-
-                {{- $img_path := .Name }}
-                {{- with $.Params.resources }}
-                    {{- range first 1 (where . "src" $img_path) }}
-                        {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
-                        {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
-                        {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
-                    {{- end }}
-                {{- end }}
-                {{- $full := .Resize $full_size }}
-                    <div class="lightbox" id="lightbox-{{ $index }}">
-                        <div class="content">
-                            <img src="{{ $full.RelPermalink }}"/>
-                            <div class="title">
-                                {{ if not $.Site.Params.no_exif }}
-                                    {{ if in (slice "jpg" "jpeg" "tiff" "tif") $full.MediaType.SubType }}
-                                    {{- with $full.Exif -}}
-                                        <ul>
-                                            {{/*  {{  printf "%#v" . }}   */}}
-                                            {{- if isset . "Nikon3" -}}
-                                                {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
-                                            {{ end }}
-                                            {{- with .Tags -}}
-                                            {{ $tags := . }}
-                                            <li><i class="fas fa-camera"></i> {{- if isset . "Model" }}
-                                                    {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
-                                                        {{ .Make }} 
-                                                    {{ end }}  */}}
-                                                    {{ .Model }}
-                                                {{- else }}
-                                                    {{ if isset $full.Params "composite" }}
-                                                        {{ $full.Params.composite }}
-                                                    {{- else }}Composite Photo
-                                                    {{ end }}
-                                                {{ end }}
-                                            </li>
-                                            {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
-                                                
-                                                {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
-                                                    {{ substr $tags.LensModel (len $tags.Make)}}
-                                                {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
-                                                    {{ substr $tags.LensModel (len $tags.Model)}}
-                                                {{- else }}
-                                                    {{ $tags.LensModel }}
-                                                {{ end }}
-                                                </li>
-                                            {{- end }}
-                                            
-                                            {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
-                                            {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
-                                            {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
-                                            {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
-                                            {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 02, 2006" }}</li>{{ end }}
-                                            {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
-                                            {{- end -}}
-                                        </ul>
-                                        
-                                    {{- end }}
-                                {{- end }}{{ end }}
-                            </div>
-                        <a class="close" href="#ltb-gallery"><i class="far fa-times-circle"></i></a>
-                        </div>
-                    </div>
-                    
-                    {{/*  <div class="box">
-                        <img src="{{ $full.RelPermalink }}" alt="Thumbnail of {{ $full.Name }}">
-                        <div class="exif">
-                            {{ if not $.Site.Params.no_exif }}
-                                {{ if in (slice "jpg" "jpeg" "tiff" "tif") $full.MediaType.SubType }}
-                                {{- with $full.Exif -}}
-                                    {{- with .Tags -}}
-                                        <li><i class="fas fa-camera"></i> {{- if isset . "Model" }}
-                                                {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
-                                                    {{ .Make }} 
-                                                {{ end }}
-                                                {{ .Model }}
-                                            {{- else }}
-                                                {{ if isset $full.Params "composite" }}
-                                                    {{ $full.Params.composite }}
-                                                {{- else }}Composite Photo
-                                                {{ end }}
-                                            {{ end }}
-                                        </li><i class="fas fa-telescope"></i> 
-                                        {{- if isset . "LensModel" -}}
-                                            <li>{{- if not (hasPrefix (lower .LensModel) (lower .Make)) }}
-                                                    {{ .LensModel }}
-                                                {{- else }}
-                                                    {{ substr .LensModel (len .Make)}}
-                                                {{ end }} @ {{ .FocalLength }}mm
-                                            </li>
-                                        {{- end }}
-                                        {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>  {{ . }}s</li>{{ end }}
-                                        {{- with .FNumber }}<li><i class="fas fa-adjust"></i> f/{{ . }}</li>{{ end }}
-                                        {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>  ISO {{ . }}</li>{{ end }}
-                                        {{- with .DateTaken }}<li>Taken at {{ .Format "January 2, 2006" }}</li>{{ end }}
-                                    {{- end -}}
-                                {{- end }}
-                            {{- end }}{{ end }}
-                        </div>
-                    </div>  */}}
-            {{- end }}
-        {{- end }}
-    </div>
     </div>
 {{ end }}
