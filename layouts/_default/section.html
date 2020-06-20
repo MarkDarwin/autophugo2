@@ -6,11 +6,12 @@
     {{- /* Things in site config */}}
     {{- $thumb_height := default 250 ($.Param "thumb_height") }}
     {{- $full_width := default 960 ($.Param "full_width") }}
+    {{- $full_height := default 720 ($.Param "full_width") }}
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
     {{- $full_quality := default 90 ($.Param "full_quality") }}
 
     {{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
-    {{- $full_size := printf "%dx q%d" $full_width $full_quality }}
+    {{- $full_size := printf "%dx%d q%d" $full_width $full_height $full_quality }}
 
     {{- /* Get and reorder the list of images */}}
     {{- $imgglob := printf "*%s" (path.Join .File.Dir "**") }}
@@ -37,7 +38,7 @@
                 {{- end }}
             {{- end }}
             {{- $thumb := .Resize $thumb_size }}
-            {{- $full := .Resize $full_size }}
+            {{- $full := .Fit $full_size }}
             {{- $img_dat.Set "full" $full.RelPermalink }}
             {{- $img_dat.Set "thumb" $thumb.RelPermalink }}
             {{- $scratch.Add "images" (slice $img_dat) }}
