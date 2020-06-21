@@ -1,7 +1,9 @@
 	<nav>
 		<ul>
 		{{ range .Site.Params.header.links }}
-			<li><a href="{{ .url }}" class="icon {{ .icon }}">{{ .name }}</a></li>
+			<li><a href="{{ .url }}">
+				<i class="fa {{ .icon }}" aria-hidden="true"></i>
+				<span>{{ .name }}</span></a></li>
 		{{ end }}
 		</ul>
 	</nav>
