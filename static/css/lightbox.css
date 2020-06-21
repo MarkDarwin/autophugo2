@@ -18,6 +18,27 @@
 }
 
 
+
+@media screen and (max-width: 980px) {
+  .row {
+    flex-flow: column;
+  }
+  
+  .row > .column {
+    padding: 8px 8px;
+  }
+  
+  .row > .column > img{
+    width: 100%;
+    height: auto;
+    max-height: unset;
+  } 
+  #ltb-container {
+    width: 100%;
+  }
+}
+
+
 .row:after {
   content: "";
   display: table;
