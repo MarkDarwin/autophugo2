@@ -5,12 +5,17 @@
 
     {{- /* Things in site config */}}
     {{- $thumb_height := default 250 ($.Param "thumb_height") }}
+    {{- $small_width := default 960 ($.Param "small_width") }}
+    {{- $small_height := default 720 ($.Param "small_width") }}
     {{- $full_width := default 960 ($.Param "full_width") }}
     {{- $full_height := default 720 ($.Param "full_width") }}
+    
     {{- $thumb_quality := default 50 ($.Param "thumb_quality") }}
+    {{- $small_quality := default 90 ($.Param "small_quality") }}
     {{- $full_quality := default 90 ($.Param "full_quality") }}
 
     {{- $thumb_size := printf "x%d q%d" $thumb_height $thumb_quality }}
+    {{- $small_size := printf "%dx q%d" $small_width $small_quality }}
     {{- $full_size := printf "%dx%d q%d" $full_width $full_height $full_quality }}
 
     {{- /* Get and reorder the list of images */}}
@@ -39,8 +44,11 @@
             {{- end }}
             {{- $thumb := .Resize $thumb_size }}
             {{- $full := .Fit $full_size }}
+            {{- $small := .Resize $small_size }}
             {{- $img_dat.Set "full" $full.RelPermalink }}
+            {{- $img_dat.Set "small" $small.RelPermalink }}
             {{- $img_dat.Set "thumb" $thumb.RelPermalink }}
+
             {{- $scratch.Add "images" (slice $img_dat) }}
         {{ end }}
     {{ end }}
@@ -60,19 +68,20 @@
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
                             <div class="column">
-                                <img src='{{ .Get "thumb" }}' onclick="openModal();currentSlide({{ add  $index 1 }})" class="hover-shadow">
+                                <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-srcset='{{ .Get "thumb" }}, {{ .Get "small" }}'
+                                onclick="openModal();currentSlide({{ add  $index 1 }})"  >
                             </div>
                         {{- end }}
                     {{- end }}
                 </div>
                 <!-- The Modal/Lightbox -->
                 <div id="myModal" class="modal">
-                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                    <div class="close cursor" onclick="closeModal()">&times;</div>
                     <div class="table">
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
                                 <div class="column item">
-                                    <img class="demo contain" src='{{ .Get "thumb" }}' style="flex-basis: 150px; flex-shrink: 1;" onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' style="flex-basis: 150px; flex-shrink: 1;" onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
                                 </div>
                             {{ end }}
                         {{ end }}
@@ -87,20 +96,14 @@
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>   
 
-
-
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
                                 <div class="mySlides">
-                                    <img src='{{ .Get "full" }}' class="fill" />
+                                    <img src='/images/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "full" }} 1x,{{ .Get "full" }} 1.2x'   class="fill" />
                                 </div>
                             {{- end }}
                         {{- end }}
-                    
-                         
                     </div>
-
-                    
                 </div>
             </div>
             
