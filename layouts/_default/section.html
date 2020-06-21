@@ -48,6 +48,11 @@
             {{- $img_dat.Set "full" $full.RelPermalink }}
             {{- $img_dat.Set "small" $small.RelPermalink }}
             {{- $img_dat.Set "thumb" $thumb.RelPermalink }}
+            {{- $img_dat.Set "thumb_width" $thumb.Width  }}
+            {{- $img_dat.Set "small_width" $small.Width  }}
+            {{- $img_dat.Set "full_width" $full.Width  }}
+            {{- $img_dat.Set "full_height" $full.Height  }}
+            
 
             {{- $scratch.Add "images" (slice $img_dat) }}
         {{ end }}
@@ -68,7 +73,8 @@
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
                             <div class="column">
-                                <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-srcset='{{ .Get "thumb" }}, {{ .Get "small" }}'
+                                <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
+                                data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w , {{ .Get "small" }} {{ .Get "small_width" }}w'
                                 onclick="openModal();currentSlide({{ add  $index 1 }})"  >
                             </div>
                         {{- end }}
