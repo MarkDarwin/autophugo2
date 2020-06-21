@@ -19,7 +19,7 @@
 
 
 
-@media screen and (max-width: 980px) {
+@media screen and (max-device-width: 980px) {
   .row {
     flex-flow: column;
   }

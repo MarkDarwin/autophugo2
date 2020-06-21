@@ -8,6 +8,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
 
+section {margin: 10px;}
+
 body { line-height: 1; }
 
 ol, ul { list-style: none; }
@@ -236,7 +238,7 @@ table.alt tfoot { border-top: 0; }
   .panel > .closer { background-size: 2.5em; background-position: 75% 25%; } }
 @media screen and (max-width: 980px) { .panel > .inner.split { -moz-flex-direction: column; -webkit-flex-direction: column; -ms-flex-direction: column; flex-direction: column; }
   .panel > .inner.split > div { margin-left: 0; width: 100%; } }
-@media screen and (max-width: 736px) { .panel { -moz-transform: translateY(-100vh); -webkit-transform: translateY(-100vh); -ms-transform: translateY(-100vh); transform: translateY(-100vh); padding: 4em 2em 2em 2em ; bottom: auto; top: calc(4em - 1px); }
+@media screen and (max-width: 980px) { .panel { -moz-transform: translateY(-100vh); -webkit-transform: translateY(-100vh); -ms-transform: translateY(-100vh); transform: translateY(-100vh); padding: 4em 2em 2em 2em ; bottom: auto; top: calc(4em - 1px); }
   .panel.active { -moz-transform: translateY(0); -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0); } }
 
 /* Poptrox Popup */
@@ -297,7 +299,7 @@ body.loading #header { -moz-transform: translateY(4em); -webkit-transform: trans
 #header nav > ul > li a.active { background-color: #242629; }
 #header > h1 > a > img {max-width: 4em; max-height: 4em; margin-right: 1em;} 
 
-@media screen and (max-width: 736px) { body { padding: 4em 0 0 0; }
+@media screen and (max-width: 980px) { body { padding: 4em 0 0 0; }
   #header { -moz-transform: translateY(0); -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0); bottom: auto; height: 4em; padding: 0 1em; top: 0; }
   body.loading #header { -moz-transform: translateY(-3.4em); -webkit-transform: translateY(-3.4em); -ms-transform: translateY(-3.4em); transform: translateY(-3.4em); }
   #header h1 { font-size: 0.9em; }
