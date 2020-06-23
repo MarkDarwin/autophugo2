@@ -12,7 +12,7 @@
 {{- range (where .Site.Pages "Kind" "section").ByDate }}
 {{- if eq .Type "album" }}
 {{- $title := .Title }}
-{{- $link := .Permalink }}
+{{- $link := .RelPermalink }}
 
 {{- /* The path we need under the assets directory */}}
 {{- $imgpath := path.Join .File.Dir .Params.albumthumb }}
