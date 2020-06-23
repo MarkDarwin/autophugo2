@@ -75,6 +75,7 @@
                             <div class="column">
                                 <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
                                 data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w , {{ .Get "small" }} {{ .Get "small_width" }}w'
+                                id="thumb{{ add  $index 1 }}"
                                 onclick="openModal();currentSlide({{ add  $index 1 }})"  >
                             </div>
                         {{- end }}
