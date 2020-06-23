@@ -58,8 +58,8 @@
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  overflow: auto;
+  height: calc(100vh - 4em);
+  overflow: hidden;
   background-color: rgb(36, 38, 41); 
   flex-flow: column;
   flex-basis: content;
@@ -106,6 +106,11 @@
   display: none;
   text-align: center;
 }
+
+.mySlides img {
+  max-height: calc(100vh - 4em - 300px);
+}
+
 
 /* Next & previous buttons */
 .prev,
@@ -175,8 +180,7 @@ img.demo {
 }
 
 .demo:hover {
-  transform: scale(3); 
-  z-index: 100;
+  z-index: 1000;
 }
 
 
@@ -201,7 +205,7 @@ img.hover-shadow {
   .table > .item > img {
     display: block;
     width: auto;
-    max-height: 70px;
+    max-height: 100px;
   }
 
 .fill {object-fit: fill;}
@@ -209,3 +213,17 @@ img.hover-shadow {
 .cover {object-fit: cover;}
 .scale-down {object-fit: scale-down;}
 .none {object-fit: none;}
+
+
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.scrolling-wrapper-flexbox .card {
+  flex: 0 0 auto;
+}

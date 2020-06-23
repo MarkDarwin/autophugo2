@@ -83,11 +83,11 @@
                 <!-- The Modal/Lightbox -->
                 <div id="myModal" class="modal">
                     <div class="close cursor" onclick="closeModal()">&times;</div>
-                    <div class="table">
+                    <div class="table scrolling-wrapper scrolling-wrapper-flexbox ">
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
-                                <div class="column item">
-                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' style="flex-basis: 150px; flex-shrink: 1;" onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                <div class="column item card">
+                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
                                 </div>
                             {{ end }}
                         {{ end }}
