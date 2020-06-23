@@ -54,9 +54,9 @@
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top: 4em;
+  /* padding-top: 4em; */
   left: 0;
-  top: 0;
+  top: 4em;
   width: 100%;
   height: calc(100vh - 4em);
   overflow: hidden;
@@ -91,13 +91,14 @@
 .close {
   color: #cacaca;
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 25px;
   font-size: 35px;
   font-weight: bold;
   padding: 0 16px 0 16px; 
   border-radius: 3px 3px 3px 3px;
   cursor: pointer;
+  z-index: 1005;
 }
 
 
