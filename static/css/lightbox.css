@@ -25,22 +25,27 @@
   .card {
     padding: 8px 8px;
     width: 100%;
-    transition: 0.5s;
+    min-height: 0;
+    transition: min-height 0.1s ease-in-out;
+    transition-delay: 0s;
   }
 
   .card.active {
     min-height: calc(100vh - 4em);
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+    transition: min-height 0.5s ease-in-out;
+    transition-delay: 0.5s;
   }
 
   .row > .card > img{
-    width: 80%;
+    width: 100%;
     height: auto;
     max-height: unset;
+    /* transition: width 0.5s ease-out; */
   } 
 
   .row > .card.active > img{
     width: 100%;
+    /* transition: width 0.5s ease-in; */
   }
 
 
@@ -49,37 +54,45 @@
   }
 
   .card .exif ul{
-    margin-top: 2em;
+    margin: 2em 0 0 .5em;
+    text-align: left;
     list-style: none;
+    /*
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly;
+    justify-content: space-evenly; */
   }
 
 
   .card.active .exif {
-    display: block;
+    /*display: block;
     -moz-transform: translateY(1px); -webkit-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px); 
     -moz-transition: -moz-transform 0.5s ease; 
     -webkit-transition: -webkit-transform 0.5s ease; 
     -ms-transition: -ms-transform 0.5s ease; 
-    transition: transform 0.5s ease; 
+    transition: transform 0.5s ease;  */
+    max-height: 1500px;
+    transition: max-height 0.5s ease-in;
+    transition-delay: 1s;
   }
 }
 
 
 .card .exif {
-  display: none;
+  display: block;
+  max-height: 0;
+  transition: max-height 0.1s ease-out;
+  overflow: hidden;
   /* -moz-transform: translateY(-100vh); 
   -webkit-transform: translateY(-100vh); 
   -ms-transform: translateY(-100vh); 
   transform: translateY(-100vh); */
-  -moz-transition: -moz-transform 0.5s ease; 
+  /* -moz-transition: -moz-transform 0.5s ease; 
   -webkit-transition: -webkit-transform 0.5s ease; 
   -ms-transition: -ms-transform 0.5s ease; 
   transition: transform 0.5s ease; 
-  -webkit-overflow-scrolling: touch; 
-  /* top: 4em; left: 0; max-height: calc(80vh - 4em); overflow-y: auto; position: fixed; width: 100%; z-index: 10001;  */
+  -webkit-overflow-scrolling: touch;  */
+  
 }
 
 
