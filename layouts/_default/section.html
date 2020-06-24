@@ -30,6 +30,7 @@
     {{- /* Reize images and capture their urls */}}
     {{- range $index, $image := $images }}
         {{- with $image -}}
+            {{- $img := . }}
             {{- $img_dat := newScratch }}
             {{- $img_dat.Set "alt" "" }}
             {{- $img_dat.Set "phototitle" "" }}
@@ -52,8 +53,12 @@
             {{- $img_dat.Set "small_width" $small.Width  }}
             {{- $img_dat.Set "full_width" $full.Width  }}
             {{- $img_dat.Set "full_height" $full.Height  }}
-            
-
+            {{- $img_dat.Set "exif" (dict "copyright" "souissi.eu" ) }}
+            {{ if not $.Site.Params.no_exif }}
+                {{ if in (slice "jpg" "jpeg" "tiff" "tif") .MediaType.SubType }}
+                    {{- $img_dat.Set "exif" .Exif }}
+                {{- end }}
+            {{ end }}            
             {{- $scratch.Add "images" (slice $img_dat) }}
         {{ end }}
     {{ end }}
@@ -72,11 +77,51 @@
                 <div class="row">
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
-                            <div class="column">
+                            <div class="column card">
                                 <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
                                 data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w , {{ .Get "small" }} {{ .Get "small_width" }}w'
                                 id="thumb{{ add  $index 1 }}"
-                                onclick="openModal();currentSlide({{ add  $index 1 }})"  >
+                                onclick="openModal(); currentSlide({{ add  $index 1 }});"  />
+                                <div class="exif">
+                                    {{- with .Get "exif" }}
+                                        <ul>
+                                            {{/*  {{  printf "%#v" . }}   */}}
+                                            {{- if isset . "Nikon3" -}}
+                                                {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
+                                            {{ end }}
+                                            {{- with .Tags -}}
+                                                {{ $tags := . }}
+                                                <li><i class="fas fa-camera"></i> 
+                                                    {{- if isset . "Model" }}
+                                                        {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
+                                                            {{ .Make }} 
+                                                        {{ end }}  */}}
+                                                        {{ .Model }}
+                                                    {{- else }}
+                                                        Composite Photo
+                                                    {{ end }}
+                                                </li>
+                                                {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
+                                                    {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
+                                                        {{ substr $tags.LensModel (len $tags.Make)}}
+                                                    {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
+                                                        {{ substr $tags.LensModel (len $tags.Model)}}
+                                                    {{- else }}
+                                                        {{ $tags.LensModel }}
+                                                    {{ end }}
+                                                    </li>
+                                                {{- end }}
+                                                
+                                                {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
+                                                {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
+                                                {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
+                                                {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
+                                                {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 02, 2006" }}</li>{{ end }}
+                                                {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
+                                            {{- end -}}
+                                        </ul>   
+                                    {{- end }}  
+                                </div>
                             </div>
                         {{- end }}
                     {{- end }}
@@ -88,7 +133,7 @@
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
                                 <div class="column item card">
-                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }})" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
                                 </div>
                             {{ end }}
                         {{ end }}
@@ -106,7 +151,47 @@
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
                                 <div class="mySlides">
-                                    <img src='/images/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "full" }} 1x,{{ .Get "full" }} 1.2x'   class="fill" />
+                                    <img src='/images/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "full" }} 1x,{{ .Get "full" }} 1.2x'  />
+                                    <div class="exif">
+                                        {{- with .Get "exif" }}
+                                            <ul>
+                                                {{/*  {{  printf "%#v" . }}   */}}
+                                                {{- if isset . "Nikon3" -}}
+                                                    {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
+                                                {{ end }}
+                                                {{- with .Tags -}}
+                                                    {{ $tags := . }}
+                                                    <li><i class="fas fa-camera"></i> 
+                                                        {{- if isset . "Model" }}
+                                                            {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
+                                                                {{ .Make }} 
+                                                            {{ end }}  */}}
+                                                            {{ .Model }}
+                                                        {{- else }}
+                                                            Composite Photo
+                                                        {{ end }}
+                                                    </li>
+                                                    {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
+                                                        {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
+                                                            {{ substr $tags.LensModel (len $tags.Make)}}
+                                                        {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
+                                                            {{ substr $tags.LensModel (len $tags.Model)}}
+                                                        {{- else }}
+                                                            {{ $tags.LensModel }}
+                                                        {{ end }}
+                                                        </li>
+                                                    {{- end }}
+                                                    
+                                                    {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
+                                                    {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
+                                                    {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
+                                                    {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
+                                                    {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 02, 2006" }}</li>{{ end }}
+                                                    {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
+                                                {{- end -}}
+                                            </ul>   
+                                        {{- end }}  
+                                    </div>
                                 </div>
                             {{- end }}
                         {{- end }}

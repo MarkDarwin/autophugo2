@@ -106,6 +106,30 @@
 .mySlides {
   display: none;
   text-align: center;
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.exif{
+  font-family: 'Roboto Mono', monospace;
+}
+
+.mySlides .exif ul {
+  list-style: none;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.exif i {
+  margin-right: 1em;
+}
+
+
+
+.card .exif {
+  display: none;
 }
 
 .mySlides img {
