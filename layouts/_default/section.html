@@ -77,10 +77,9 @@
                 <div class="row">
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
-                            <div class="column card">
+                            <div class="column card" id="thumb{{ add  $index 1 }}">
                                 <img class="hover-shadow lazy" src="/images/spinner.svg" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
                                 data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w , {{ .Get "small" }} {{ .Get "small_width" }}w'
-                                id="thumb{{ add  $index 1 }}"
                                 onclick="openModal(); currentSlide({{ add  $index 1 }});"  />
                                 <div class="exif">
                                     {{- with .Get "exif" }}
