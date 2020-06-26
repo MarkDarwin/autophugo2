@@ -106,7 +106,7 @@
 
 
 .mySlides img {
-  max-height: calc(100vh - 4em - 100px);
+  max-height: calc(80vh - 4em );
 }
 
 
@@ -209,7 +209,7 @@ img.hover-shadow {
   .table > .item > img {
     display: block;
     width: auto;
-    max-height: 100px;
+    max-height: 10vh;
   }
 
   .table .card {
