@@ -1,7 +1,7 @@
 <header id="header">
     {{ $url := .RelPermalink }}
     <h1>
-    <a href="{{ .Site.BaseURL }}"><img src={{ .Site.Params.favicon | relURL }} /><strong>{{ .Site.Title }}</strong></a>
+    <a href="/"><img src={{ .Site.Params.favicon | relURL }} /><strong>{{ .Site.Title }}</strong></a>
     {{ range $index, $element := split $url "/" }}
         {{ if ne $element "" }}
             / {{ . | humanize }}
