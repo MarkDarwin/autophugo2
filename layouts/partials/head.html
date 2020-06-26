@@ -26,4 +26,5 @@
 <link rel="stylesheet" type="text/css" href="{{ "css/main.css" | relURL }}" />
 <link rel="stylesheet" type="text/css" href="{{ "css/component.css" | relURL }}" />
 {{/*  <link rel="stylesheet" type="text/css" href="{{ "css/one-line-gallery.css" | relURL }}" />  */}}
-<link rel="stylesheet" type="text/css" href="{{ "css/lightbox.css" | relURL }}" />
+{{ $style := resources.Get "css/lightbox.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">

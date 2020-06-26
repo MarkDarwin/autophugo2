@@ -7,21 +7,19 @@
   flex-flow: row wrap;
   justify-content: center;
   
-}
+  .column {
+    padding: 8px 8px;
+    img{
+    max-height: 20vh;
+    }
+  }
 
-.row > .column {
-  padding: 8px 8px;
-}
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 
-.row > .column > img{
-  max-height: 20vh;
-}
-
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 /* Create four equal columns that floats next to eachother */
@@ -86,29 +84,24 @@
   flex-flow: row;
   align-items: flex-end;
   justify-content: center;
+
+
+  .exif{
+    font-family: 'Roboto Mono', monospace;
+    i {
+      margin-right: 1em;
+    }
+    ul {
+      list-style: none;
+      text-align: left;
+      margin: 0 0 0 1em;
+    }
+  }
+
+  img {
+    max-height: calc(80vh - 4em );
+  }
 }
-
-.exif{
-  font-family: 'Roboto Mono', monospace;
-}
-
-.mySlides .exif ul {
-  list-style: none;
-  text-align: left;
-  margin: 0 0 0 1em;
-}
-
-.exif i {
-  margin-right: 1em;
-}
-
-
-
-
-.mySlides img {
-  max-height: calc(80vh - 4em );
-}
-
 
 /* Next & previous buttons */
 .prev,
@@ -147,22 +140,12 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-}
 
-#miniatures .next,
-#miniatures .prev 
-{
-  width: 2em;
-}
 
-#miniatures .next span,
-#miniatures .prev span
- {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: normal;
+  .next, .prev {
+    width: 2em;
+  }
 }
-
 
 /* Number text (1/3 etc) */
 .numbertext {
@@ -183,10 +166,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
 
-.caption-container p, .caption-container .prev, .caption-container .next {
-  margin: 0;
+  p, .prev, .next {
+    margin: 0;
+  }
 }
 
 img.demo {
@@ -206,37 +189,35 @@ img.demo {
 
 img.hover-shadow {
   transition: 0.3s;
-}
 
-.hover-shadow:hover {
-  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+  &:hover {
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+  }
 }
 
 @media screen and (min-width: 979px) {
   .table {
     display: flex;
     border-collapse: collapse;
-    width: 100vw
-    -webkit-overflow-scrolling: touch; 
+    width: 100vw;
+    // -webkit-overflow-scrolling: touch; 
     flex-wrap: nowrap;
     overflow-x: auto;
   
-  }
+    .item {
+      flex: 1;
+      flex-grow: 1;
+      img {
+        display: block;
+        width: auto;
+        max-height: 10vh;
+      }
+    }
 
-  .table > .item {
-    flex: 1;
-    flex-grow: 1;
+    .card {
+      flex: 0 0 auto;
+    } 
   }
-
-  .table > .item > img {
-    display: block;
-    width: auto;
-    max-height: 10vh;
-  }
-
-  .table .card {
-    flex: 0 0 auto;
-  } 
 }
 
 @media screen and (max-width: 980px) {
@@ -269,10 +250,9 @@ img.hover-shadow {
     align-self: stretch;
     /* background-color: #f3f5f6;
     color: #444444; */
-  }
-  
-  .exif i {
-    margin-right: 1em;
+    i {
+      margin-right: 1em;
+    }
   }
   
   .mySlides img {
