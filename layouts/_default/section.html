@@ -87,14 +87,18 @@
                 </div>
                 <!-- The Modal/Lightbox -->
                 <div id="myModal" class="modal">
-                    <div class="table">
-                        {{- range $index, $image := $scratch.Get "images" }}
-                            {{- with $image -}}
-                                <div class="column item card">
-                                    <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
-                                </div>
+                    <div id="miniatures">
+                        <a class="prev" onclick="document.getElementById('miniaturestable').scrollLeft -= 70;">&#10094;</a>
+                        <div class="table" id="miniaturestable" >
+                            {{- range $index, $image := $scratch.Get "images" }}
+                                {{- with $image -}}
+                                    <div class="column item card">
+                                        <img class="demo contain lazy" src='/images/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                    </div>
+                                {{ end }}
                             {{ end }}
-                        {{ end }}
+                        </div>
+                        <a class="next" onclick="document.getElementById('miniaturestable').scrollLeft += 70;">&#10095;</a>
                     </div>
                     <div class="modal-content">
                         <!-- Caption text -->
