@@ -19,13 +19,14 @@ function scrollToTargetAdjusted(element){
 // Open the Modal
 function openModal() {
     
-    if (!isMobileView())
+    if (true || !isMobileView())
 	    document.getElementById("myModal").style.display = "flex";
   }
   
   // Close the Modal
   function closeModal() {
 	document.getElementById("myModal").style.display = "none";
+	selectionIndex = 0;
   }
   
 //   var slideIndex = 1;
@@ -44,7 +45,7 @@ function openModal() {
   function showSlides(n) {
 	var i, slides, dots;
 
-	if (isMobileView()){
+	if (false && isMobileView()){
 		slides = document.getElementsByClassName("card");
 		if (selectionIndex > 0)
 			slides[selectionIndex -1].className = slides[selectionIndex -1].className.replace(" active", "");

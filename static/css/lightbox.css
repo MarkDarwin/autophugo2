@@ -17,65 +17,7 @@
   max-height: 150px;
 }
 
-@media screen and (max-width: 980px) {
-  .row {
-    flex-flow: column;
-  }
-  
-  .card {
-    padding: 8px 8px;
-    width: 100%;
-    min-height: 0;
-    transition: min-height 0.1s ease-in-out;
-    transition-delay: 0s;
-  }
 
-  .card.active {
-    min-height: calc(100vh - 4em);
-    transition: min-height 0.5s ease-in-out;
-    transition-delay: 0.5s;
-  }
-
-  .row > .card > img{
-    width: 75%;
-    height: auto;
-    max-height: unset;
-    /* transition: width 0.5s ease-out; */
-  } 
-
-  .row > .card.active > img{
-    width: 100%;
-    /* transition: width 0.5s ease-in; */
-  }
-
-
-  #ltb-container {
-    width: 100%;
-  }
-
-  .card .exif ul{
-    margin: 2em 0 0 .5em;
-    text-align: left;
-    list-style: none;
-    /*
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly; */
-  }
-
-
-  .card.active .exif {
-    /*display: block;
-    -moz-transform: translateY(1px); -webkit-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px); 
-    -moz-transition: -moz-transform 0.5s ease; 
-    -webkit-transition: -webkit-transform 0.5s ease; 
-    -ms-transition: -ms-transform 0.5s ease; 
-    transition: transform 0.5s ease;  */
-    max-height: 1500px;
-    transition: max-height 0.5s ease-in;
-    transition-delay: 1s;
-  }
-}
 
 
 .card .exif {
@@ -273,21 +215,116 @@ img.hover-shadow {
   box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 }
 
-.table {
+@media screen and (min-width: 979px) {
+  .table {
     display: flex;
     border-collapse: collapse;
     width: 100%;
+    -webkit-overflow-scrolling: touch; 
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  
   }
+
   .table > .item {
     flex: 1;
     flex-grow: 1;
   }
-  
+
   .table > .item > img {
     display: block;
     width: auto;
     max-height: 100px;
   }
+
+  .table .card {
+    flex: 0 0 auto;
+  } 
+}
+
+@media screen and (max-width: 980px) {
+  
+  .row {
+    flex-flow: column;
+  }
+  
+  /* .card {
+    padding: 8px 8px;
+    width: 100%;
+    min-height: 0;
+    transition: min-height 0.1s ease-in-out;
+    transition-delay: 0s;
+  }
+
+  .card.active {
+    min-height: calc(100vh - 4em);
+    transition: min-height 0.5s ease-in-out;
+    transition-delay: 0.5s;
+  } */
+
+  .table {
+    display: none;
+  }
+
+  .row > .card > img{
+    width: 75%;
+    height: auto;
+    max-height: unset;
+    /* transition: width 0.5s ease-out; */
+  } 
+
+  .row > .card.active > img{
+    width: 100%;
+    /* transition: width 0.5s ease-in; */
+  }
+
+
+  #ltb-container {
+    width: 100%;
+  }
+
+  .card .exif ul{
+    margin: 2em 0 0 .5em;
+    text-align: left;
+    list-style: none;
+    /*
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly; */
+  }
+
+
+  .card.active .exif {
+    /*display: block;
+    -moz-transform: translateY(1px); -webkit-transform: translateY(1px); -ms-transform: translateY(1px); transform: translateY(1px); 
+    -moz-transition: -moz-transform 0.5s ease; 
+    -webkit-transition: -webkit-transform 0.5s ease; 
+    -ms-transition: -ms-transform 0.5s ease; 
+    transition: transform 0.5s ease;  */
+    max-height: 1500px;
+    transition: max-height 0.5s ease-in;
+    transition-delay: 1s;
+  }
+
+  .mySlides {
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .exif {
+    margin-top: 1em;
+  }
+  
+  .exif i {
+    margin-right: 1em;
+  }
+  
+  .mySlides img {
+    max-height: calc(100vh - 4em);
+    max-width: 100%;
+  }
+}
 
 .fill {object-fit: fill;}
 .contain {object-fit: contain;}
@@ -295,16 +332,3 @@ img.hover-shadow {
 .scale-down {object-fit: scale-down;}
 .none {object-fit: none;}
 
-
-.scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrolling-wrapper-flexbox {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-.scrolling-wrapper-flexbox .card {
-  flex: 0 0 auto;
-}
