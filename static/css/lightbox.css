@@ -14,7 +14,7 @@
 }
 
 .row > .column > img{
-  max-height: 150px;
+  max-height: 20vh;
 }
 
 
@@ -219,20 +219,17 @@ img.hover-shadow {
 
 @media screen and (max-width: 980px) {
   
-  /* .row {
-    flex-flow: column;
-  } */
-  
   .table {
     display: none;
   }
 
-  .row > .card > img{
-    width: 25%;
-    height: auto;
-    max-height: unset;
-    /* transition: width 0.5s ease-out; */
-  } 
+  #album-header {
+    max-width: 80%;
+  }
+
+  .row > .column > img{
+    max-height: 15vh;
+  }
 
   #ltb-container {
     width: 100%;
@@ -247,9 +244,9 @@ img.hover-shadow {
   .exif {
     padding: 2em 0 2em 0;
     width: 100%;
-    align-self: flex-start;
-    background-color: #f3f5f6;
-    color: #444444;
+    align-self: stretch;
+    /* background-color: #f3f5f6;
+    color: #444444; */
   }
   
   .exif i {
@@ -260,6 +257,17 @@ img.hover-shadow {
     max-height: calc(100vh - 4em - 60px);
     max-width: 100%;
     object-fit: contain;
+  }
+}
+
+@media (max-aspect-ratio: 5/8) {
+  .row > .column > img{
+    max-height: 10vh;
+  }
+}
+@media (min-aspect-ratio: 5/8) {
+  .row > .column > img{
+    max-height: 15vh;
   }
 }
 
