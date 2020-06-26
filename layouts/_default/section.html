@@ -87,7 +87,6 @@
                 </div>
                 <!-- The Modal/Lightbox -->
                 <div id="myModal" class="modal">
-                    <div class="close cursor" onclick="closeModal()">&times;</div>
                     <div class="table">
                         {{- range $index, $image := $scratch.Get "images" }}
                             {{- with $image -}}
@@ -104,6 +103,7 @@
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <p id="caption"></p>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                            <div class="close cursor" onclick="closeModal()">&times;</div>
                         </div>   
 
                         {{- range $index, $image := $scratch.Get "images" }}

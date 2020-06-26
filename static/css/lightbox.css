@@ -65,8 +65,9 @@
 /* The Close Button */
 .close {
   color: #cacaca;
+  background-color: rgb(36, 38, 41); 
   position: absolute;
-  top: 60px;
+  top: 1em;
   right: 0px;
   font-size: 35px;
   font-weight: bold;
