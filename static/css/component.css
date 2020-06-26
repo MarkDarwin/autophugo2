@@ -13,8 +13,18 @@
 	display: inline-block;
 	margin: 10px 5px 0 5px;
 	vertical-align: top;
-	/* height: 250px; */
+	max-height: 250px;
 }
+
+@media screen and (max-width: 980px) {
+	
+	.og-grid li {
+		max-height: unset;
+		width: 100%;
+		padding-left: unset;
+	}	
+}
+
 
 .og-grid li > article > a,
 .og-grid li > article > a img {
