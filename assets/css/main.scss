@@ -376,24 +376,26 @@ blockquote, q {
   position: relative;
   /* font-family: 'Old Standard TT', serif; */
   text-align: left;
-}
-blockquote:before, q:before {
-  content: '\201C';
-  position: absolute;
-  top: 0em;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #242629 ; 
-  width: 3rem;
-  height: 3rem;
-  font: 6em/1.08em 'PT Sans', sans-serif;
-  /* color: #666; */
+
+  &:before {
+    content: '\201C';
+    position: absolute;
+    top: 0em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #242629 ; 
+    width: 3rem;
+    height: 3rem;
+    font: 6em/1.08em 'PT Sans', sans-serif;
+    /* color: #666; */
+    
+  }
   
-}
-blockquote:after, q:after {
-  content: "\2013 \2003" attr(author);
-  display: block;
-  text-align: right;
-  font-size: 0.875em;
-  color: #eee;
+  &:after {
+    content: "\2013 \2003" attr(author);
+    display: block;
+    text-align: right;
+    font-size: 0.875em;
+    color: #eee;
+  }
 }

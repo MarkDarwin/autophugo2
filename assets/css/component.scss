@@ -7,13 +7,13 @@
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
-}
-
-.og-grid li {
-	display: inline-block;
-	margin: 10px 5px 0 5px;
-	vertical-align: top;
-	max-height: 250px;
+	
+	li {
+		display: inline-block;
+		margin: 10px 5px 0 5px;
+		vertical-align: top;
+		max-height: 250px;
+	}
 }
 
 @media screen and (max-width: 980px) {
@@ -116,12 +116,11 @@
 .og-fullimg {
 	width: 60%;
 	text-align: center;
-}
-
-.og-fullimg img {
-	display: inline-block;
-	max-height: 100%;
-	max-width: 100%;
+	img {
+		display: inline-block;
+		max-height: 100%;
+		max-width: 100%;
+	}
 }
 
 .og-details h3 {
