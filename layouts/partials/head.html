@@ -25,14 +25,8 @@
 
 {{- range $elem_index, $elem_val := (slice "main" "component" "lightbox") }}
     {{- with $elem_val }}
-        {{/*  {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Minify | resources.Fingerprint }}  */}}
-        {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Fingerprint }}
+        {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+        {{/*  {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Fingerprint }}  */}}
         <link rel="stylesheet" type="text/css" href="{{ $style.RelPermalink }}">
     {{ end }}
 {{ end }}
-
-{{/*  <link rel="stylesheet" type="text/css" href="{{ "css/main.css" | relURL }}" />  */}}
-{{/*  <link rel="stylesheet" type="text/css" href="{{ "css/component.css" | relURL }}" />  */}}
-{{/*  <link rel="stylesheet" type="text/css" href="{{ "css/one-line-gallery.css" | relURL }}" />  */}}
-{{/*  {{ $style := resources.Get "css/lightbox.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}  */}}
-{{/*  <link rel="stylesheet" href="{{ $style.Permalink }}">  */}}
