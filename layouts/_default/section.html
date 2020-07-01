@@ -90,7 +90,7 @@
         <!-- The Modal/Lightbox -->
         <div id="myModal" class="modal">
             <div id="miniatures">
-                <a class="prev" onclick="document.getElementById('miniaturestable').scrollLeft -= 70;">&#10094;</a>
+                <a class="prev" onclick="document.getElementById('miniaturestable').scrollLeft -= 400;">&#10094;</a>
                 <div class="table" id="miniaturestable" >
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
@@ -100,7 +100,7 @@
                         {{ end }}
                     {{ end }}
                 </div>
-                <a class="next" onclick="document.getElementById('miniaturestable').scrollLeft += 70;">&#10095;</a>
+                <a class="next" onclick="document.getElementById('miniaturestable').scrollLeft += 400;">&#10095;</a>
             </div>
             <div class="modal-content">
                 <!-- Caption text -->
