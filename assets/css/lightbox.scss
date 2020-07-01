@@ -36,7 +36,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  overflow-y: auto ;
+  overflow-x: hidden;
   background-color: rgb(36, 38, 41); 
   flex-flow: column;
   flex-basis: content;
@@ -83,7 +84,8 @@
   flex-flow: row wrap;
   align-items: flex-end;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
+  padding: 0 1em;
 
 
   .exif{
@@ -144,6 +146,7 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  padding: 0 1em;
 
 
   .next, .prev {
@@ -203,10 +206,11 @@ img.hover-shadow {
   .table {
     display: flex;
     border-collapse: collapse;
-    width: 100vw;
+    width: 100%;
     // -webkit-overflow-scrolling: touch; 
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   
     .item {
       flex: 1;
