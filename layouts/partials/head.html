@@ -23,10 +23,16 @@
 
 {{ template "_internal/google_analytics_async.html" . }}
 
-{{- range $elem_index, $elem_val := (slice "main" "component" "lightbox") }}
+{{ if eq .Kind "section" }} 
+    {{- .Scratch.Set "styles" (slice "main" "lightbox") -}} 
+{{ else }}
+    {{- .Scratch.Set "styles" (slice "main" "component" ) -}} 
+{{ end }}
+{{- range $elem_index, $elem_val := .Scratch.Get "styles" }}
     {{- with $elem_val }}
         {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Minify | resources.Fingerprint }}
         {{/*  {{ $style := resources.Get (printf "css/%s.scss"  .) | resources.ToCSS | resources.Fingerprint }}  */}}
         <link rel="stylesheet" type="text/css" href="{{ $style.RelPermalink }}">
+        
     {{ end }}
 {{ end }}
