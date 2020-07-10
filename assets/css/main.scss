@@ -91,9 +91,11 @@ video {
   vertical-align: middle;
 }
 
-html {
+body, html {
   scroll-behavior: smooth;
+  height: 100%;
 }
+
 
 article,
 aside,
@@ -1313,11 +1315,12 @@ body.loading #main .thumb {
   max-width: 700px;
   min-width: 320px;
   margin: 0 auto 0;
+  
+  img {
+    width: 100%;
+  }
 }
 
-#welcome img {
-  width: 100%;
-}
 
 #album-header {
   /* background: #fff; */
@@ -1327,38 +1330,4 @@ body.loading #main .thumb {
   margin: 0 auto 0;
   padding: 0.5em;
   text-align: center;
-}
-
-blockquote,
-q {
-  display: block;
-  border-width: 2px 0;
-  border-style: solid;
-  border-color: #eee;
-  padding: 1.5em 0 0.5em;
-  margin: 1em 0;
-  position: relative;
-  /* font-family: 'Old Standard TT', serif; */
-  text-align: left;
-
-  &:before {
-    content: "\201C";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #242629;
-    width: 3rem;
-    height: 3rem;
-    font: 6em/1.08em "PT Sans", sans-serif;
-    /* color: #666; */
-  }
-
-  &:after {
-    content: "– " attr(author);
-    display: block;
-    text-align: right;
-    font-size: 0.875em;
-    color: #eee;
-  }
 }

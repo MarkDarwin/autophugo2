@@ -26,7 +26,7 @@
 {{ if eq .Kind "section" }} 
     {{- .Scratch.Set "styles" (slice "main" "lightbox") -}} 
 {{ else }}
-    {{- .Scratch.Set "styles" (slice "main" "component" ) -}} 
+    {{- .Scratch.Set "styles" (slice "main" "home" "component" ) -}} 
 {{ end }}
 {{- range $elem_index, $elem_val := .Scratch.Get "styles" }}
     {{- with $elem_val }}
