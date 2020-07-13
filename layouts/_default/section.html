@@ -56,6 +56,7 @@
             {{- $img_dat.Set "exif" (dict "copyright" "souissi.eu" ) }}
             {{ if not $.Site.Params.no_exif }}
                 {{ if in (slice "jpg" "jpeg" "tiff" "tif") .MediaType.SubType }}
+                    {{ warnf "Extracting EXIFs from %q" .Name }}
                     {{- $img_dat.Set "exif" .Exif }}
                 {{- end }}
             {{ end }}            
