@@ -33,13 +33,17 @@
             {{- $img := . }}
             {{- $img_dat := newScratch }}
             {{- $img_dat.Set "alt" "" }}
-            {{- $img_dat.Set "phototitle" "" }}
+            {{- $img_dat.Set "phototitle" ($scratch.Get "Title") }}
             {{- $img_dat.Set "description" "" }}
             {{- $img_path := .Name }}
             {{- with $.Params.resources }}
                 {{- range first 1 (where . "src" $img_path) }}
-                    {{- if isset . "alt" }}{{ $img_dat.Set "alt" .alt }}{{ end }}
-                    {{- if isset . "phototitle" }}{{ $img_dat.Set "phototitle" .phototitle }}{{ end }}
+                    {{- if isset . "alt" }}
+                        {{ $img_dat.Set "alt" .alt }}
+                    {{ end }}
+                    {{- if and (isset . "phototitle") ( gt (len (trim .phototitle " ")) 0)  }}
+                        {{ $img_dat.Set "phototitle" .phototitle }}
+                    {{ end }}
                     {{- if isset . "description" }}{{ $img_dat.Set "description" .description }}{{ end }}
                 {{- end }}
             {{- end }}
@@ -58,6 +62,16 @@
                 {{ if in (slice "jpg" "jpeg" "tiff" "tif") .MediaType.SubType }}
                     {{ warnf "Extracting EXIFs from %q" .Name }}
                     {{- $img_dat.Set "exif" .Exif }}
+                    {{ with .Exif }}
+                        {{ with .Tags }}
+                            {{ with .ImageDescription }}
+                                {{ if  gt ( len ( trim . " " )) 0  }}
+                                    {{ $img_dat.Set "phototitle" . }}
+                                    {{ warnf "Found the image title  %q" . }}
+                                {{- end }}
+                            {{- end }}
+                        {{- end }}
+                    {{- end }}
                 {{- end }}
             {{ end }}            
             {{- $scratch.Add "images" (slice $img_dat) }}
@@ -96,7 +110,7 @@
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
                             <div class="column item card">
-                                <img class="demo contain lazy" src='/img/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ $scratch.Get "Title" }}   ({{ add  $index 1}} / {{ $nbImages }})'>
+                                <img class="demo contain lazy" src='/img/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ .Get "phototitle" }} ({{ add  $index 1}} / {{ $nbImages }})'>
                             </div>
                         {{ end }}
                     {{ end }}
@@ -108,7 +122,7 @@
                 <div class="caption-container">
                     <!-- Next/previous controls -->
                     <a class="prev" onclick="plusSlides(-1)"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-                    <p id="caption"></p>
+                    <h3 id="caption"></h3>
                     <a class="next" onclick="plusSlides(1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                     <div class="close cursor" onclick="closeModal()"><i class="far fa-times-circle"></i></div>
                 </div>   
@@ -118,48 +132,50 @@
                         {{ $img := . }}
                         <div class="mySlides">
                             <img src='/img/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
-                            <div class="exif">
-                                {{- with .Get "exif" }}
-                                    <!-- {{  printf "%#v" . }} -->
-                                    {{- with .Tags -}}
-                                        {{ $tags := . }}
-                                        {{ with .ImageDescription }}<div class="title"><h3>{{ .}}</h3></div>{{ end }}
-                                        <!-- {{ with .UserComment }}<p>{{ . }}</p>{{ end }} -->
-                                        <ul>
-                                            {{- if isset . "Nikon3" -}}
-                                                {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
-                                            {{ end }}
-                                            <li><i class="fas fa-camera"></i> 
-                                                {{- if isset . "Model" }}
-                                                    {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
-                                                        {{ .Make }} 
-                                                    {{ end }}  */}}
-                                                    {{ .Model }}
-                                                {{- else }}
-                                                    Composite Photo
+                            {{ if not $.Site.Params.no_exif }}
+                                <div class="exif">
+                                    {{- with .Get "exif" }}
+                                        <!-- {{  printf "%#v" . }} -->
+                                        {{- with .Tags -}}
+                                            {{ $tags := . }}
+                                            {{/*  {{ with .ImageDescription }}<div class="title"><h3>{{ .}}</h3></div>{{ end }}  */}}
+                                            <!-- {{ with .UserComment }}<p>{{ . }}</p>{{ end }} -->
+                                            <ul>
+                                                {{- if isset . "Nikon3" -}}
+                                                    {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
                                                 {{ end }}
-                                            </li>
-                                            {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
-                                                {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
-                                                    {{ substr $tags.LensModel (len $tags.Make)}}
-                                                {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
-                                                    {{ substr $tags.LensModel (len $tags.Model)}}
-                                                {{- else }}
-                                                    {{ $tags.LensModel }}
-                                                {{ end }}
+                                                <li><i class="fas fa-camera"></i> 
+                                                    {{- if isset . "Model" }}
+                                                        {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
+                                                            {{ .Make }} 
+                                                        {{ end }}  */}}
+                                                        {{ .Model }}
+                                                    {{- else }}
+                                                        Composite Photo
+                                                    {{ end }}
                                                 </li>
-                                            {{- end }}
-                                            
-                                            {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
-                                            {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
-                                            {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
-                                            {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
-                                            {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 2006" }}</li>{{ end }}
-                                            {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
-                                        {{- end -}}
-                                    </ul>   
-                                {{- end }}  
-                            </div>
+                                                {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
+                                                    {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
+                                                        {{ substr $tags.LensModel (len $tags.Make)}}
+                                                    {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
+                                                        {{ substr $tags.LensModel (len $tags.Model)}}
+                                                    {{- else }}
+                                                        {{ $tags.LensModel }}
+                                                    {{ end }}
+                                                    </li>
+                                                {{- end }}
+                                                
+                                                {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
+                                                {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
+                                                {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
+                                                {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
+                                                {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 2006" }}</li>{{ end }}
+                                                {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
+                                            {{- end -}}
+                                        </ul>   
+                                    {{- end }}  
+                                </div>
+                            {{- end }}
                         </div>
                     {{- end }}
                 {{- end }}
