@@ -124,7 +124,7 @@
                     <a class="prev" onclick="plusSlides(-1)"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     <h3 id="caption"></h3>
                     <a class="next" onclick="plusSlides(1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    <div class="close cursor" onclick="closeModal()"><i class="far fa-times-circle"></i></div>
+                    <div class="close cursor" onclick="closeModal()"><i class="fa fa-times-circle"></i></div>
                 </div>   
 
                 {{- range $index, $image := $scratch.Get "images" }}
@@ -142,35 +142,33 @@
                                             <!-- {{ with .UserComment }}<p>{{ . }}</p>{{ end }} -->
                                             <ul>
                                                 {{- if isset . "Nikon3" -}}
-                                                    {{- with .Nikon3}}<li><i class="fas fa-bullseye"></i> {{ .Lens }}</li>{{ end }}
+                                                    {{- with .Nikon3}}<li><i class="fas fa-bullseye fa-fw"></i> {{ .Lens }}</li>{{ end }}
                                                 {{ end }}
-                                                <li><i class="fas fa-camera"></i> 
+                                                <li><i class="fa fa-camera fa-fw"></i> 
                                                     {{- if isset . "Model" }}
-                                                        {{/*  {{ if not (hasPrefix (lower .Model) (lower .Make)) }}
-                                                            {{ .Make }} 
-                                                        {{ end }}  */}}
                                                         {{ .Model }}
                                                     {{- else }}
                                                         Composite Photo
                                                     {{ end }}
                                                 </li>
-                                                {{- with .LensModel }}<li><i class="fas fa-bullseye"></i> 
+                                                {{- with .LensModel }}
+                                                    <li><i class="fa fa-wpexplorer fa-fw"></i> 
                                                     {{- if (hasPrefix (lower $tags.LensModel) (lower $tags.Make)) }}
                                                         {{ substr $tags.LensModel (len $tags.Make)}}
                                                     {{- else if (hasPrefix (lower $tags.LensModel) (lower $tags.Model)) }}
                                                         {{ substr $tags.LensModel (len $tags.Model)}}
                                                     {{- else }}
-                                                        {{ $tags.LensModel }}
+                                                        {{ . }}
                                                     {{ end }}
                                                     </li>
                                                 {{- end }}
                                                 
-                                                {{- with .FocalLength }}<li><i class="fas fa-ruler-horizontal"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
-                                                {{- with .ExposureTime }}<li><i class="fas fa-hourglass-half"></i>{{ . }}s</li>{{ end }}
-                                                {{- with .FNumber }}<li><i class="fas fa-adjust"></i>f/{{ . }}</li>{{ end }}
-                                                {{- with .ISOSpeedRatings }}<li><i class="fas fa-film"></i>ISO {{ . }}</li>{{ end }}
-                                                {{- with .DateTimeOriginal }}<li><i class="fas fa-calendar-alt"></i>{{ .Format "January 2006" }}</li>{{ end }}
-                                                {{- with .Copyright }}<li><i class="far fa-copyright"></i>{{ . }}</li>{{ end }}
+                                                {{- with .FocalLength }}<li><i class="fa fa-search-plus fa-fw"></i>{{ . }}{{- with $tags.FocalLengthIn35mmFilm }}{{ if ne . $tags.FocalLength }} ({{ . }}){{ end }}{{ end }}mm</li>{{ end }}
+                                                {{- with .ExposureTime }}<li><i class="fa fa-hourglass-half fa-fw"></i>{{ . }}s</li>{{ end }}
+                                                {{- with .FNumber }}<li><i class="fa fa-empire fa-fw"></i>f/{{ . }}</li>{{ end }}
+                                                {{- with .ISOSpeedRatings }}<li><i class="fa fa-film fa-fw"></i></i>ISO {{ . }}</li>{{ end }}
+                                                {{- with .DateTimeOriginal }}<li><i class="fa fa-calendar fa-fw"></i>{{ .Format "January 2006" }}</li>{{ end }}
+                                                {{- with .Copyright }}<li><i class="fa fa-copyright fa-fw"></i>{{ . }}</li>{{ end }}
                                             {{- end -}}
                                         </ul>   
                                     {{- end }}  

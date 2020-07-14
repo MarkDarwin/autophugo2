@@ -23,6 +23,8 @@
 
 {{ template "_internal/google_analytics_async.html" . }}
 
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+
 {{ if eq .Kind "section" }} 
     {{- .Scratch.Set "styles" (slice "main" "lightbox") -}} 
 {{ else }}
