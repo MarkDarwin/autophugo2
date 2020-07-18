@@ -69,9 +69,21 @@ function openModal() {
   }
 
 
+$(document).ready(function(){
+	const parsedUrl = new URL(window.location.href);
+	console.log(parsedUrl.searchParams.get("pic")); // "123"
+	pic = parsedUrl.searchParams.get("pic");
+	if (pic != null) {
+		const parsed = parseInt(pic, 10);
+		if (!isNaN(parsed)) { 
+			openModal();
+			currentSlide(parsed); 
+		}
+	} 
+});
 
-  window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {
 	document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
   });
-  
+
   

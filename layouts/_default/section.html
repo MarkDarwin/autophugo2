@@ -23,6 +23,7 @@
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
     {{- $scratch := newScratch }}
     {{- $scratch.Set "Title" .Title }}
+    {{- $scratch.Set "url" .RelPermalink }}
     {{- $images := $imageresources }}
     {{- $nbImages := len $images }}
 
@@ -102,10 +103,10 @@
                 </div>
             </div>
         </div>
-        <!-- The Modal/Lightbox -->
+        <!-- The Modal/Lightbox --> 
         <div id="myModal" class="modal">
             <div id="miniatures">
-                <a class="prev" onclick="document.getElementById('miniaturestable').scrollLeft -= 400;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    <a class="overlay middle left icon fabutton" onclick="document.getElementById('miniaturestable').scrollLeft -= 400;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                 <div class="table" id="miniaturestable" >
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
@@ -115,23 +116,38 @@
                         {{ end }}
                     {{ end }}
                 </div>
-                <a class="next" onclick="document.getElementById('miniaturestable').scrollLeft += 400;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                <a class="overlay middle right icon fabutton" onclick="document.getElementById('miniaturestable').scrollLeft += 400;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
             </div>
             <div class="modal-content">
-                <!-- Caption text -->
-                <div class="caption-container">
-                    <!-- Next/previous controls -->
-                    <a class="prev" onclick="plusSlides(-1)"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-                    <h3 id="caption"></h3>
-                    <a class="next" onclick="plusSlides(1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    <div class="close cursor" onclick="closeModal()"><i class="fa fa-times-circle"></i></div>
-                </div>   
-
                 {{- range $index, $image := $scratch.Get "images" }}
                     {{- with $image -}}
                         {{ $img := . }}
                         <div class="mySlides">
-                            <img src='/img/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
+                            <div class="img-container">
+                                <img src='/img/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
+                                <div class="caption-container overlay center top">
+                                    <!-- Next/previous controls -->
+                                    <h3 id="caption"></h3>
+                                </div>   
+                                <div class="overlay top right">
+                                    <div class="fabutton cursor" onclick="closeModal()"><i class="fa fa-times-circle"></i></div>
+                                </div>
+                                <div class="overlay middle left">
+                                    <!-- Next/previous controls -->
+                                    <a class="icon fabutton" onclick="plusSlides(-1)"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="overlay middle right">
+                                    <a class="icon fabutton" onclick="plusSlides(1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="overlay bottom right">
+                                    <a href='{{ $scratch.Get "url" }}?pic={{ add $index 1 }}' class="icon fabutton" title="Sharable Link">
+                                      <i class="fa fa-link"></i>
+                                    </a>
+                                    <a href='{{ .Get "full" }}' class="icon fabutton" target="_blank" title="Download in full resolution">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                </div>
+                            </div>
                             {{ if not $.Site.Params.no_exif }}
                                 <div class="exif">
                                     {{- with .Get "exif" }}
