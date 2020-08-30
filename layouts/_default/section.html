@@ -23,7 +23,7 @@
     {{- $imageresources := where (resources.Match $imgglob) "ResourceType" "image" }}
     {{- $scratch := newScratch }}
     {{- $scratch.Set "Title" .Title }}
-    {{- $scratch.Set "url" .RelPermalink }}
+    {{- $scratch.Set "url" .Permalink }}
     {{- $images := $imageresources }}
     {{- $nbImages := len $images }}
 
@@ -81,6 +81,7 @@
 
 
     <div id="main">
+        <input type="text" value="{{ .RelPermalink }}" id="urlInput">
         <div id="ltb-container">
             <div id="album-header">
                 <h1>{{- .Title}}</h1>
@@ -125,10 +126,10 @@
                         <div class="mySlides">
                             <div class="img-container">
                                 <img src='/img/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
-                                <div class="caption-container overlay center top">
+                                {{/*  <div class="caption-container overlay center top">
                                     <!-- Next/previous controls -->
                                     <h3 id="caption"></h3>
-                                </div>   
+                                </div>     */}}
                                 <div class="overlay top right">
                                     <div class="fabutton cursor" onclick="closeModal()"><i class="fa fa-times-circle"></i></div>
                                 </div>
@@ -140,7 +141,8 @@
                                     <a class="icon fabutton" onclick="plusSlides(1)"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="overlay bottom right">
-                                    <a href='{{ $scratch.Get "url" }}?pic={{ add $index 1 }}' class="icon fabutton" title="Sharable Link">
+                                    {{ $url := $scratch.Get "url" }}
+                                    <a href="#"  onclick="copyToClipboard('{{ $url }}?pic={{ add $index 1 }}');"  class="icon fabutton" title="Click to copy a sharable link to this picture">
                                       <i class="fa fa-link"></i>
                                     </a>
                                     <a href='{{ .Get "full" }}' class="icon fabutton" target="_blank" title="Download in full resolution">
@@ -154,7 +156,7 @@
                                         <!-- {{  printf "%#v" . }} -->
                                         {{- with .Tags -}}
                                             {{ $tags := . }}
-                                            {{/*  {{ with .ImageDescription }}<div class="title"><h3>{{ .}}</h3></div>{{ end }}  */}}
+                                            {{ with .ImageDescription }}<div class="title"><h3>{{ .}}</h3></div>{{ end }}
                                             <!-- {{ with .UserComment }}<p>{{ . }}</p>{{ end }} -->
                                             <ul>
                                                 {{- if isset . "Nikon3" -}}

@@ -52,7 +52,7 @@ function openModal() {
 	slides = document.getElementsByClassName("mySlides");
 	dots = document.getElementsByClassName("demo");
 	
-	var captionText = document.getElementById("caption");
+	var captionText = document.getElementById("caption");	
 	if (n > slides.length) {slideIndex = 1}
 	if (n < 1) {slideIndex = slides.length}
 	for (i = 0; i < slides.length; i++) {
@@ -81,6 +81,22 @@ $(document).ready(function(){
 		}
 	} 
 });
+
+function copyToClipboard(txt) {
+	 /* Get the text field */
+	 var copyText = document.getElementById("urlInput");
+	 copyText.value = txt;
+
+	 /* Select the text field */
+	 copyText.select();
+	 copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+   
+	 /* Copy the text inside the text field */
+	 document.execCommand("copy");
+   
+	 /* Alert the copied text */
+	 alert("Copied the text: " + copyText.value);
+}
 
 window.addEventListener('scroll', () => {
 	document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
