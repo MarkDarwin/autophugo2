@@ -95,7 +95,7 @@
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
                             <div class="column card" id="thumb{{ add  $index 1 }}">
-                                <img class="hover-shadow lazy" src="/img/spinner.svg" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
+                                <img class="hover-shadow lazy" src="/img/placeholder.png" data-src='{{ .Get "thumb"  }}' data-sizes="auto" 
                                 data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w , {{ .Get "small" }} {{ .Get "small_width" }}w'
                                 onclick="openModal(); currentSlide({{ add  $index 1 }});"  />
                             </div>
@@ -112,7 +112,7 @@
                     {{- range $index, $image := $scratch.Get "images" }}
                         {{- with $image -}}
                             <div class="column item card">
-                                <img class="demo contain lazy" src='/img/spinner.svg' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ .Get "phototitle" }} ({{ add  $index 1}} / {{ $nbImages }})'>
+                                <img class="demo contain lazy" src='/img/placeholder.png' data-src='{{ .Get "thumb" }}' data-srcset='{{ .Get "thumb" }}' onclick="currentSlide({{ add  $index 1 }});" alt='{{ .Get "phototitle" }} ({{ add  $index 1}} / {{ $nbImages }})'>
                             </div>
                         {{ end }}
                     {{ end }}
@@ -125,7 +125,7 @@
                         {{ $img := . }}
                         <div class="mySlides">
                             <div class="img-container">
-                                <img src='/img/spinner.svg' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
+                                <img src='/img/placeholder.png' class="lazy" data-src='{{ .Get "full" }}' data-srcset='{{ .Get "thumb" }} {{ .Get "thumb_width" }}w, {{ .Get "small" }} {{ .Get "small_width" }}w, {{ .Get "full" }} {{ .Get "full_width" }}w'  />
                                 {{/*  <div class="caption-container overlay center top">
                                     <!-- Next/previous controls -->
                                     <h3 id="caption"></h3>
